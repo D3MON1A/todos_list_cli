@@ -1,4 +1,5 @@
 from time import sleep
+import csv
 
 todos = []
 stop = False
@@ -18,26 +19,56 @@ def print_list():
     for i in range (0,lengthy):
       print(str(i+1)+")"+ " "+ todos[i] + "\n")
       sleep(0.4)
+    sleep(0.2)
     pass
 
 def delete_task(number_to_delete):
     global todos
+    lengthy =len(todos)
     number_as_int = int(number_to_delete)
     number_as_int = number_as_int - 1
- #  deleted_item = int(todos[number_as_int])
-    print("... deleting item" +" "+ str(number_as_int+1))
-    del todos[number_as_int]
+    if (number_as_int <= lengthy):
+    #  deleted_item = int(todos[number_as_int])
+        print("... deleting item" +" "+ str(number_as_int+1))
+        del todos[number_as_int]                # instead of del, would be more consistent with: todos.pop(int(number_to_delete))
+    else:
+        print("!! That item number exceeds the length of your list, try a lower number, please")
+        sleep(1.4)
     sleep(0.6)
     print_list()
     pass
 
 def save_todos():
-    # your code here
+    import csv
+    global todos
+    myfile = open("todos.csv", "w")
+    wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
+    wr.writerow(todos)
+    print ("saving...")
+    sleep(0.33)
     pass
 
     
 def load_todos():
-    # your code here
+    import csv
+    
+    with open('todos.csv') as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=',')
+        line_count = 0
+        for row in csv_reader:
+            if line_count == 0:
+                print(f'Tasks are {", ".join(row)}')
+    
+    ### 4Geeks method came out:
+    # global todos
+    # myfile = open("todos.csv","r")
+    # csv_reader = csv.reader(myfile, quoting=csv.QUOTE.ALL)
+    # for line in csv_reader:
+    #       for task in line:
+    #           todods = add_one_task(task)        
+
+
+    # print(f'Processed {line_count} lines.')
     pass
 
 # Below this code will only run if the entry file running was app.py
