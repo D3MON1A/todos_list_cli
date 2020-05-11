@@ -41,7 +41,7 @@ def delete_task(number_to_delete):
 def save_todos():
     import csv
     global todos
-    myfile = open("todos.csv", "w")
+    myfile = open("todos.csv", "w")     # using W+ will overwrite, prefer not to use
     wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
     wr.writerow(todos)
     print ("saving...")
@@ -58,6 +58,7 @@ def load_todos():
         for row in csv_reader:
             if line_count == 0:
                 print(f'Tasks are {", ".join(row)}')
+                sleep(2)
     
     ### 4Geeks method came out:
     # global todos
@@ -73,6 +74,8 @@ def load_todos():
 
 # Below this code will only run if the entry file running was app.py
 if __name__ == '__main__':
+    load_todos()
+
     while stop == False:
         print("""
     Choose an option: 
